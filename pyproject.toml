@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brains"
+version = "0.1.0"
+description = "BRAINS: A Retrieval-Augmented System for Alzheimer's Detection and Monitoring (ICMLA 2025), reference implementation"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Rajan Das Gupta" }]
+
+[project.urls]
+Homepage = "https://rajandasguptaml.github.io/BRAINS/"
+Repository = "https://github.com/rajandasguptaml/BRAINS"
+Paper = "https://doi.org/10.1109/ICMLA66185.2025.00224"
+
+[tool.setuptools.packages.find]
+include = ["brains*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
