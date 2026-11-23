@@ -1,0 +1,31 @@
+# Laptop-scale demo: synthetic cohort, small sentence encoder, 135M-parameter causal LM with LoRA.
+# Runs on CPU in a few minutes; numbers are not comparable with the paper.
+data:
+  path: data/synthetic/cohort.jsonl
+encoder:
+  name: sentence-transformers/all-MiniLM-L6-v2
+  device: cpu
+retrieval:
+  top_k: 5
+  top_n: 100
+  reranker: null            # paper: BAAI/bge-reranker-large
+model:
+  lm_name: HuggingFaceTB/SmolLM2-135M
+  lora: {r: 8, alpha: 32, dropout: 0.05, target_modules: all-linear}
+  fusion_heads: auto
+  fusion_dropout: 0.1
+train:
+  epochs: 1
+  batch_size: 2
+  lr: 1.0e-4
+  warmup_steps: 20
+  max_len: 384
+  max_mask: 4
+  seed: 0
+  device: auto
+  log_every: 20
+eval:
+  batch_size: 4
+  max_new_tokens: 24
+  split: test
+out_dir: outputs/demo_tiny

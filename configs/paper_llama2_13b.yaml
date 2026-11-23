@@ -1,0 +1,34 @@
+# Settings reported in the paper (Sec. III-A and III-B). Requires LLaMA2-13B weights, the institutional dataset
+# in the JSONL schema of data/README.md, and a multi-GPU machine. The pre-training stage (next-token prediction on
+# the curated Alzheimer's corpus: 10 epochs, batch 64, lr 1e-4, 1,000 warm-up steps, block size 2048) is not part
+# of this reference implementation; start from a domain-adapted checkpoint or skip it.
+data:
+  path: data/private/alzheimers_1105.jsonl
+encoder:
+  # the paper uses the diagnostic LLM itself as the case encoder; v0.1 of this code uses a sentence encoder
+  name: BAAI/bge-large-en-v1.5
+  device: cuda
+retrieval:
+  top_k: 5
+  top_n: 1000
+  reranker: BAAI/bge-reranker-large
+model:
+  lm_name: meta-llama/Llama-2-13b-hf
+  lora: {r: 8, alpha: 32, dropout: 0.05, target_modules: [q_proj, k_proj, v_proj, o_proj]}
+  fusion_heads: 8
+  fusion_dropout: 0.1
+train:
+  epochs: 15
+  batch_size: 4
+  lr: 1.0e-5
+  warmup_steps: 100
+  max_len: 2048
+  max_mask: 4                # dynamic masking: m in [0, 4] of the K = 5 retrieved cases
+  seed: 0
+  device: cuda
+  log_every: 50
+eval:
+  batch_size: 8
+  max_new_tokens: 32
+  split: test
+out_dir: outputs/brains_llama2_13b

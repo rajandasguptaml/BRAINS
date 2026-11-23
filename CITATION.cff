@@ -1,0 +1,58 @@
+cff-version: 1.2.0
+message: "If you use this code or build on BRAINS, please cite the ICMLA 2025 paper below."
+type: software
+title: "BRAINS: A Retrieval-Augmented System for Alzheimer's Detection and Monitoring"
+authors:
+  - family-names: "Das Gupta"
+    given-names: "Rajan"
+    affiliation: "American International University-Bangladesh; ELITE Research Lab"
+    orcid: "https://orcid.org/0000-0003-4065-743X"
+  - family-names: "Morol"
+    given-names: "Md Kishor"
+    affiliation: "ELITE Research Lab"
+  - family-names: "Fahad"
+    given-names: "Nafiz"
+    affiliation: "Multimedia University; ELITE Research Lab"
+  - family-names: "Hosain"
+    given-names: "Md Tanzib"
+    affiliation: "American International University-Bangladesh; ELITE Research Lab"
+  - family-names: "Choya"
+    given-names: "Sumaya Binte Zilani"
+    affiliation: "George Mason University; ELITE Research Lab"
+  - family-names: "Hossen"
+    given-names: "Md Jakir"
+    affiliation: "Multimedia University; ELITE Research Lab"
+repository-code: "https://github.com/rajandasguptaml/BRAINS"
+url: "https://rajandasguptaml.github.io/BRAINS/"
+license: MIT
+keywords:
+  - Alzheimer's disease
+  - retrieval-augmented generation
+  - clinical decision support
+  - large language models
+  - cognitive decline detection
+preferred-citation:
+  type: conference-paper
+  title: "BRAINS: A Retrieval-Augmented System for Alzheimer's Detection and Monitoring"
+  authors:
+    - family-names: "Das Gupta"
+      given-names: "Rajan"
+    - family-names: "Morol"
+      given-names: "Md Kishor"
+    - family-names: "Fahad"
+      given-names: "Nafiz"
+    - family-names: "Hosain"
+      given-names: "Md Tanzib"
+    - family-names: "Choya"
+      given-names: "Sumaya Binte Zilani"
+    - family-names: "Hossen"
+      given-names: "Md Jakir"
+  collection-title: "2025 International Conference on Machine Learning and Applications (ICMLA)"
+  publisher:
+    name: "IEEE"
+  year: 2025
+  month: 12
+  start: 1473
+  end: 1478
+  doi: "10.1109/ICMLA66185.2025.00224"
+  url: "https://arxiv.org/abs/2511.02490"

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BRAINS: Retrieval-Augmented Alzheimer's Detection</title>
+<meta name="description" content="BRAINS: A Retrieval-Augmented System for Alzheimer's Detection and Monitoring. IEEE ICMLA 2025. Paper, code, data card and results.">
+<meta property="og:title" content="BRAINS: A Retrieval-Augmented System for Alzheimer's Detection and Monitoring">
+<meta property="og:description" content="IEEE ICMLA 2025. LLM reasoning over retrieved neurocognitive cases, fused through a Case Fusion Layer. 77.3% correct diagnoses, F1 0.819.">
+<meta property="og:image" content="https://rajandasguptaml.github.io/BRAINS/static/fig1_architecture.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1b1f24; --muted:#5b6471; --line:#e3e6ea; --card:#f6f8fa; --accent:#1f5fbf; --accent-2:#0b7a4b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --bg:#0f1218; --fg:#e8ebf0; --muted:#9aa4b2; --line:#262c36; --card:#161b23; --accent:#7fb0ff; --accent-2:#5fd49a; }
+  }
+  :root[data-theme="dark"]{ --bg:#0f1218; --fg:#e8ebf0; --muted:#9aa4b2; --line:#262c36; --card:#161b23; --accent:#7fb0ff; --accent-2:#5fd49a; }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:960px;margin:0 auto;padding:0 16px 64px}
+  header{text-align:center;padding:56px 0 24px}
+  h1{font-size:clamp(1.6rem,3.6vw,2.5rem);line-height:1.2;margin:0 0 8px;letter-spacing:-0.01em}
+  .sub{color:var(--muted);font-size:1.05rem;margin:0 0 18px}
+  .authors{font-size:1.05rem;margin:0 0 6px}
+  .authors a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+  .authors a:hover{border-color:var(--accent)}
+  sup{font-size:.7em;color:var(--muted)}
+  .affil{color:var(--muted);font-size:.95rem;margin:0 0 6px}
+  .venue{display:inline-block;margin:12px 0 18px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-weight:600;background:var(--card)}
+  .links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:var(--fg);color:var(--bg);text-decoration:none;font-weight:600;font-size:.95rem}
+  .btn:hover{opacity:.88}
+  .btn.alt{background:var(--card);color:var(--fg);border:1px solid var(--line)}
+  figure{margin:36px 0 0}
+  figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+  figcaption{color:var(--muted);font-size:.95rem;margin-top:10px}
+  section{margin-top:44px}
+  h2{font-size:1.45rem;margin:0 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  h3{font-size:1.1rem;margin:0 0 6px}
+  p{margin:0 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:0 0 18px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center}
+  .tile .n{font-size:2rem;font-weight:700;color:var(--accent-2);line-height:1.1}
+  .tile .l{color:var(--muted);font-size:.9rem;margin-top:4px}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+  table{border-collapse:collapse;width:100%;min-width:760px;font-size:.92rem}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:var(--card);position:sticky;top:0}
+  tr.ours td{font-weight:700;background:color-mix(in srgb,var(--accent-2) 12%,transparent)}
+  .note{color:var(--muted);font-size:.9rem;margin-top:8px}
+  pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font:.86rem/1.5 var(--mono);margin:0}
+  code{font-family:var(--mono);font-size:.92em}
+  .copy{float:right;margin:-4px 0 8px 8px;padding:5px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);cursor:pointer;font-size:.85rem}
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;text-align:center}
+  footer a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>BRAINS: A Retrieval-Augmented System for Alzheimer's Detection and Monitoring</h1>
+    <p class="sub">Biomedical Retrieval-Augmented Intelligence for Neurodegeneration Screening</p>
+    <p class="authors">
+      <a href="https://rajandasguptaml.github.io/">Rajan Das Gupta</a><sup>1,4</sup> ·
+      Md Kishor Morol<sup>4,†</sup> ·
+      Nafiz Fahad<sup>2,4</sup> ·
+      Md Tanzib Hosain<sup>1,4</sup> ·
+      Sumaya Binte Zilani Choya<sup>3,4</sup> ·
+      Md Jakir Hossen<sup>2,4,†</sup>
+    </p>
+    <p class="affil"><sup>1</sup>American International University-Bangladesh &nbsp; <sup>2</sup>Multimedia University &nbsp; <sup>3</sup>George Mason University &nbsp; <sup>4</sup>ELITE Research Lab</p>
+    <p class="affil"><sup>†</sup>Corresponding authors</p>
+    <div class="venue">IEEE ICMLA 2025 · 24th International Conference on Machine Learning and Applications</div>
+    <div class="links">
+      <a class="btn" href="https://doi.org/10.1109/ICMLA66185.2025.00224">Paper (IEEE Xplore)</a>
+      <a class="btn" href="https://arxiv.org/abs/2511.02490">arXiv</a>
+      <a class="btn" href="https://github.com/rajandasguptaml/BRAINS">Code</a>
+      <a class="btn alt" href="https://github.com/rajandasguptaml/BRAINS/blob/main/data/README.md">Data card</a>
+      <a class="btn alt" href="https://github.com/rajandasguptaml/BRAINS/raw/main/paper/BRAINS_ICMLA2025_arXiv.pdf">PDF</a>
+      <a class="btn alt" href="#bibtex">BibTeX</a>
+    </div>
+    <figure>
+      <img src="static/fig1_architecture.png" alt="BRAINS architecture: cases from the database are encoded, fused with the input case by the Case Fusion Layer, and the fused vector replaces the RAGHere token in the prompt before LLM inference.">
+      <figcaption>Figure 1. The input case is encoded and used to retrieve similar neurocognitive records. Retrieved cases are fused with the input through the Case Fusion Layer, which replaces the <code>&lt;RAGHere&gt;</code> token in the prompt. The fused representation is passed to the LLM for inference and explanation.</figcaption>
+    </figure>
+  </header>
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p>As the global burden of Alzheimer's disease (AD) continues to grow, early and accurate detection has become increasingly critical, especially in regions with limited access to advanced diagnostic tools. We propose BRAINS (Biomedical Retrieval-Augmented Intelligence for Neurodegeneration Screening) to address this challenge. This novel system harnesses the powerful reasoning capabilities of Large Language Models (LLMs) for Alzheimer's detection and monitoring. BRAINS features a dual-module architecture: a cognitive diagnostic module and a case-retrieval module. The Diagnostic Module utilises LLMs fine-tuned on cognitive and neuroimaging datasets, including MMSE, CDR scores, and brain volume metrics, to perform structured assessments of Alzheimer's risk. Meanwhile, the Case Retrieval Module encodes patient profiles into latent representations and retrieves similar cases from a curated knowledge base. These auxiliary cases are fused with the input profile via a Case Fusion Layer to enhance contextual understanding. The combined representation is then processed with clinical prompts for inference. Evaluations on real-world datasets demonstrate BRAINS effectiveness in classifying disease severity and identifying early signs of cognitive decline. This system not only shows strong potential as an assistive tool for scalable, explainable, and early-stage Alzheimer's disease detection, but also offers hope for future applications in the field.</p>
+  </section>
+
+  <section id="method">
+    <h2>Method</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Case Retrieval Module</h3>
+        <p>The patient profile (MMSE, CDR, eTIV, nWBV, age, education, SES) is encoded and matched against a FAISS memory of historical cases by cosine similarity. Candidates are reranked with bge-reranker-large and the top-K = 5 cases form the support set.</p>
+      </div>
+      <div class="card">
+        <h3>Case Fusion Layer</h3>
+        <p>A cross-attention block takes the encoded input case as the query and the retrieved cases as keys and values. Its output is one vector that replaces the <code>&lt;RAGHere&gt;</code> token embedding in the prompt, so five cases fit regardless of the context window. During training, 0 to 4 of the retrieved cases are masked at random.</p>
+      </div>
+      <div class="card">
+        <h3>Diagnostic Module</h3>
+        <p>LLaMA2-13B, pre-trained on a curated Alzheimer's corpus and fine-tuned with LoRA (r = 8, alpha = 32) on structured records, selects one or more outcomes from no cognitive impairment to severe Alzheimer's disease. The retrieved cases are returned as inspectable evidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="results">
+    <h2>Results</h2>
+    <div class="tiles">
+      <div class="tile"><div class="n">77.3%</div><div class="l">correct diagnoses (fine-tuning alone: 60.0%)</div></div>
+      <div class="tile"><div class="n">0.819</div><div class="l">F1 over all cases (best RAG baseline: 0.755)</div></div>
+      <div class="tile"><div class="n">0.929</div><div class="l">F1 on triple-diagnosis cases (RAG-1: 0.863)</div></div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Model</th><th>All Correct</th><th>All F1</th><th>Single P</th><th>Single R</th><th>Single F1</th><th>Double P</th><th>Double R</th><th>Double F1</th><th>Triple P</th><th>Triple R</th><th>Triple F1</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LLaMA2-13B five-shot</td><td>0.335</td><td>0.339</td><td>0.000</td><td>0.000</td><td>0.000</td><td>0.299</td><td>0.719</td><td>0.423</td><td>0.421</td><td>0.980</td><td>0.591</td></tr>
+          <tr><td>LLaMA2-13B fine-tuning</td><td>0.600</td><td>0.538</td><td>0.657</td><td>0.728</td><td>0.692</td><td>0.468</td><td>0.474</td><td>0.471</td><td>0.643</td><td>0.281</td><td>0.391</td></tr>
+          <tr><td>LLaMA2-13B w/o standard</td><td>0.454</td><td>0.376</td><td>0.645</td><td>0.513</td><td>0.571</td><td>0.290</td><td>0.500</td><td>0.361</td><td>0.250</td><td>0.063</td><td>0.100</td></tr>
+          <tr><td>RAG-1</td><td>0.712</td><td>0.731</td><td>0.766</td><td>0.540</td><td>0.619</td><td>0.703</td><td>0.824</td><td>0.802</td><td>0.774</td><td>0.981</td><td>0.863</td></tr>
+          <tr><td>RAG-2</td><td>0.727</td><td>0.755</td><td>0.790</td><td>0.572</td><td>0.664</td><td>0.660</td><td>0.921</td><td>0.769</td><td>0.727</td><td>0.975</td><td>0.842</td></tr>
+          <tr class="ours"><td>BRAINS (ours)</td><td>0.773</td><td>0.819</td><td>0.784</td><td>0.731</td><td>0.740</td><td>0.711</td><td>0.875</td><td>0.810</td><td>0.931</td><td>0.911</td><td>0.929</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Table II of the paper. Single, double and triple denote cases with one, two or three concurrent diagnostic outcomes. P = precision, R = recall.</p>
+  </section>
+
+  <section id="data">
+    <h2>Data</h2>
+    <p>Fine-tuning and evaluation use 1,105 patient records collected from medical institutions, labelled with five Alzheimer's categories and described by MMSE, CDR, eTIV, nWBV, age, gender, handedness, education and socioeconomic status. Pre-training uses a curated corpus of Alzheimer's literature and structured annotations derived from NACC and ADNI. The clinical records cannot be redistributed; the <a href="https://github.com/rajandasguptaml/BRAINS/blob/main/data/README.md">data card</a> gives the schema, preprocessing and access route, and the repository ships a synthetic cohort generator with the same schema.</p>
+  </section>
+
+  <section id="code">
+    <h2>Code</h2>
+    <p>The repository holds a reference implementation of the method, reconstructed from the paper: case encoder, FAISS case memory with reranking, Case Fusion Layer, <code>&lt;RAGHere&gt;</code> injection, LoRA fine-tuning with dynamic masking, and the Table II evaluation protocol. It runs end to end on a laptop with a small Hugging Face model.</p>
+<pre><code>git clone https://github.com/rajandasguptaml/BRAINS.git &amp;&amp; cd BRAINS
+pip install -r requirements.txt
+python -m brains.synthetic --n 1200 --out data/synthetic/cohort.jsonl
+python -m brains.train --config configs/demo_tiny.yaml
+python -m brains.evaluate --checkpoint outputs/demo_tiny
+python -m brains.predict --checkpoint outputs/demo_tiny --age 76 --mmse 22 --cdr 1.0 --etiv 1450 --nwbv 0.68 --education 12 --ses 3</code></pre>
+  </section>
+
+  <section id="bibtex">
+    <h2>Citation</h2>
+    <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('bib').innerText).then(()=>{this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500)})">Copy</button>
+<pre id="bib"><code>@inproceedings{dasgupta2025brains,
+  title     = {{BRAINS}: A Retrieval-Augmented System for {Alzheimer}'s Detection and Monitoring},
+  author    = {Das Gupta, Rajan and Morol, Md Kishor and Fahad, Nafiz and Hosain, Md Tanzib and Choya, Sumaya Binte Zilani and Hossen, Md Jakir},
+  booktitle = {2025 International Conference on Machine Learning and Applications (ICMLA)},
+  publisher = {IEEE},
+  year      = {2025},
+  pages     = {1473--1478},
+  doi       = {10.1109/ICMLA66185.2025.00224}
+}</code></pre>
+  </section>
+
+  <footer>
+    <p>ELITE Research Lab · American International University-Bangladesh · Multimedia University · George Mason University</p>
+    <p><a href="https://rajandasguptaml.github.io/">rajandasguptaml.github.io</a> · <a href="https://github.com/rajandasguptaml/BRAINS">github.com/rajandasguptaml/BRAINS</a> · <a href="https://github.com/rajandasguptaml/BRAINS-platform">deployment platform</a></p>
+  </footer>
+</main>
+</body>
+</html>
