@@ -122,9 +122,9 @@ to 3 are outside this repository; step 4 maps onto `brains.train`.
 
 ## Related
 
-- [BRAINS-platform](https://github.com/rajandasguptaml/BRAINS-platform): the ELITE Research Lab deployment of the
+- [BRAINS-R-D](https://github.com/rajandasguptaml/BRAINS-R-D): the ELITE Research Lab deployment of the
   method inside a multi-agent clinical assistant (Next.js, NestJS, Python).
-- [research](https://github.com/rajandasguptaml/research): code and data behind the first author's other papers.
+- [Research-Archive](https://github.com/rajandasguptaml/Research-Archive): code and data behind the first author's other papers.
 
 ## Citation
 

@@ -40,5 +40,5 @@ Where this repository is going, and how the work is shared.
 2. Submit to Papers with Code under the ICMLA 2025 entry so the results table is indexed.
 3. Pin the repository on the GitHub profile and link it from the publications page of the personal site.
 4. Announce once per milestone (v0.1, v0.3, v1.0) on LinkedIn and X with the project page link, not more often.
-5. Cross-reference the ELITE Research Lab platform repository (`BRAINS-platform`) which deploys the method inside a
+5. Cross-reference the ELITE Research Lab platform repository (`BRAINS-R-D`) which deploys the method inside a
    multi-agent clinical assistant.
