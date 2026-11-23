@@ -124,7 +124,7 @@ to 3 are outside this repository; step 4 maps onto `brains.train`.
 
 - [BRAINS-R-D](https://github.com/rajandasguptaml/BRAINS-R-D): the ELITE Research Lab deployment of the
   method inside a multi-agent clinical assistant (Next.js, NestJS, Python).
-- [Research-Archive](https://github.com/rajandasguptaml/Research-Archive): code and data behind the first author's other papers.
+- [Research-Archive](https://github.com/rajandasguptaml/Research-Archive): early projects and coursework, with an index of the first author's paper repositories.
 
 ## Citation
 
