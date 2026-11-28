@@ -1,5 +1,6 @@
 # Laptop-scale demo: synthetic cohort, small sentence encoder, 135M-parameter causal LM with LoRA.
-# Runs on CPU in a few minutes; numbers are not comparable with the paper.
+# Measured on a laptop with a 4 GB RTX 2050: about 36 minutes for the whole quick start (7.5 of them GPU training);
+# numbers are a smoke test of the pipeline and are not comparable with the paper.
 data:
   path: data/synthetic/cohort.jsonl
 encoder:

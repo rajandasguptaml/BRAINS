@@ -66,12 +66,12 @@ Hugging Face causal language model; the planned release of the original training
 
 ```bash
 git clone https://github.com/rajandasguptaml/BRAINS.git && cd BRAINS
-pip install -r requirements.txt          # CPU PyTorch is enough for the demo
+pip install -r requirements.txt          # a CUDA build of PyTorch is strongly recommended
 
 # 1. synthetic cohort with the paper's schema (the clinical data is not redistributable)
 python -m brains.synthetic --n 1200 --out data/synthetic/cohort.jsonl
 
-# 2. build the case memory and fine-tune a small LM with LoRA + Case Fusion Layer (a few minutes on CPU)
+# 2. build the case memory and fine-tune a small LM with LoRA + Case Fusion Layer (about 30 minutes, see below)
 python -m brains.train --config configs/demo_tiny.yaml
 
 # 3. evaluate under the Table II protocol
@@ -82,6 +82,8 @@ python -m brains.predict --checkpoint outputs/demo_tiny --age 76 --mmse 22 --cdr
 
 pytest -q                                # unit and smoke tests
 ```
+
+**Runtime.** On a laptop with a 4 GB RTX 2050 the whole quick start took about 36 minutes: 7.5 minutes of GPU training, and most of the rest encoding and retrieving cases for every record on the CPU. On a CPU-only machine it is much slower. The demo model is tiny and trained for one epoch, so its scores (7.5% exact-match on the synthetic test set) only show that the pipeline runs end to end.
 
 `configs/demo_tiny.yaml` uses `HuggingFaceTB/SmolLM2-135M` and `all-MiniLM-L6-v2`; swap `model.lm_name` and
 `encoder.name` for any Hugging Face causal LM and sentence encoder. `configs/paper_llama2_13b.yaml` lists the settings
